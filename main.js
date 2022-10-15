@@ -17,20 +17,29 @@ function take_picture()
 }
 
 console.log('ml5 Version:', ml5.version);
-classifier = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/-6yMHUO5f/',modelLoaded);
+classifier = ml5.imageClassifier('https://teachablemachine.withgoogle.com/models/-6yMHUO5f/model.json',modelLoaded)
 
 function modelLoaded()
 {
     console.log("yay it worked")
 }
 
-
-function classifier()
-{
-
-}
-
 function check()
 {
-    
+    myimage= document.getElementById("capture_image");
+    classifier.classify(myimage,gotresult);
+}
+
+function gotresult(error,result)
+{
+    if(error)
+    {
+        console.error(error);
+    }
+    else
+    {
+        document.getElementById("resultname").innerHTML = result[0].label;
+        document.getElementById("resultaccuracy").innerHTML = result[0].confidence.toFixed(3);
+        console.log(result)
+    }
 }
